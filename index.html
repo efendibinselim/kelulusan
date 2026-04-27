@@ -5,146 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pengumuman Kelulusan - SMP Negeri 3 Pekanbaru</title>
   <style>
-    /* Reset & Struktur Dasar */
-    * { box-sizing: border-box; }
-    
-    html, body {
-      height: 100%;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
       margin: 0;
       padding: 0;
     }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: #f0f4f8;
-      color: #333;
-    }
-
-    /* Header */
     header {
       background: #1d4ed8;
       color: white;
-      padding: 20px 10px;
+      padding: 20px;
       text-align: center;
-      flex-shrink: 0;
     }
-
     header img {
-      height: 70px;
-      width: auto;
+      height: 80px;
       margin-bottom: 10px;
     }
-
-    header h1 { font-size: 1.4rem; margin: 5px 0; }
-    header h2 { font-size: 1rem; font-weight: normal; margin: 0; }
-
-    /* Konten Utama */
     main {
-      flex: 1 0 auto; /* Mendorong footer ke bawah */
-      display: flex;
-      justify-content: center; /* Tengah horizontal */
-      align-items: flex-start; /* Mulai dari atas */
-      padding: 30px 15px;
-    }
-
-    /* Kotak Putih Tengah */
-    .container {
-      background: white;
-      width: 100%;
-      max-width: 450px; /* Batas lebar di komputer */
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      padding: 30px 20px;
       text-align: center;
     }
-
-    .container p {
-      margin-bottom: 20px;
-      color: #64748b;
-    }
-
-    /* Input & Tombol */
     input[type="text"] {
-      width: 100%;
-      padding: 12px;
+      padding: 10px;
+      width: 250px;
       font-size: 16px;
-      border: 2px solid #e2e8f0;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      text-align: center;
-      outline: none;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
-
-    input[type="text"]:focus {
-      border-color: #2563eb;
-    }
-
     button {
-      width: 100%;
-      padding: 12px;
+      padding: 10px 20px;
       font-size: 16px;
       background-color: #2563eb;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
+      margin-left: 10px;
       cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
     }
-
-    button:hover { background-color: #1e40af; }
-
-    /* Hasil */
     .result {
-      margin-top: 25px;
-      padding-top: 20px;
-      border-top: 1px solid #f1f5f9;
-      font-size: 16px;
-      line-height: 1.6;
+      margin-top: 30px;
+      font-size: 18px;
     }
-
     .lulus {
-      color: #059669;
+      color: green;
       font-weight: bold;
-      font-size: 1.1rem;
       animation: blink 1s infinite;
-      margin-top: 10px;
     }
-
     .tidaklulus {
-      color: #dc2626;
+      color: red;
       font-weight: bold;
-      margin-top: 10px;
     }
-
-    /* Footer */
     footer {
-      background: white;
+      background: #e2e8f0;
       text-align: center;
       padding: 15px;
-      font-size: 12px;
-      color: #94a3b8;
-      border-top: 1px solid #e2e8f0;
-      flex-shrink: 0;
+      font-size: 14px;
+      margin-top: 40px;
+      color: #444;
     }
-
     @keyframes blink {
       0%, 100% { opacity: 1 }
-      50% { opacity: 0.5 }
-    }
-
-    /* Penyesuaian HP */
-    @media (max-width: 480px) {
-      header h1 { font-size: 1.1rem; }
-      header h2 { font-size: 0.9rem; }
-      .container { padding: 20px; }
+      50% { opacity: 0 }
     }
   </style>
 </head>
 <body>
-
   <header>
     <img src="https://raw.githubusercontent.com/efendibinselim/PENGUMUMAN-KELULUSAN/refs/heads/main/logosmpn3pku%20png.png" alt="Logo Sekolah">
     <h1>Pengumuman Kelulusan</h1>
@@ -152,20 +77,19 @@
   </header>
 
   <main>
-    <div class="container">
-      <p>Masukkan NISN untuk melihat hasil:</p>
-      <input type="text" id="nisnInput" placeholder="Contoh: 0098765432">
-      <button onclick="cekKelulusan()">Cek Kelulusan</button>
-      <div class="result" id="hasil"></div>
-    </div>
+    <p>Masukkan NISN untuk melihat hasil kelulusan:</p>
+    <input type="text" id="nisnInput" placeholder="Masukkan NISN">
+    <button onclick="cekKelulusan()">Cek</button>
+    <div class="result" id="hasil"></div>
   </main>
 
   <footer>
-    &copy; 2026 SMP Negeri 3 Pekanbaru<br>Jl. Dahlia No. 102
+    &copy; 2026 SMP Negeri 3 Pekanbaru - Jl. Dahlia No. 102
   </footer>
 
   <script>
     const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlOAf-YkKZAjTd7dpK49JinaQyppe3GWonVcKqewsJxboPYAOkqT2QG9-HOgx8hDs0DItwRHCA6w24/pub?output=csv";
+
     let dataSiswa = [];
 
     fetch(sheetURL)
@@ -187,20 +111,29 @@
     function cekKelulusan() {
       const input = document.getElementById("nisnInput").value.trim();
       const hasil = document.getElementById("hasil");
+
       if (input === "") {
         hasil.innerHTML = "Silakan masukkan NISN.";
         return;
       }
+
       const siswa = dataSiswa.find(d => d.nisn === input);
+
       if (siswa) {
-        let content = `<p>Nama: <strong>${siswa.nama}</strong><br>TTL: ${siswa.tempat}, ${siswa.tanggal}</p>`;
         if (siswa.status.toUpperCase() === "LULUS") {
-          content += `<div class="lulus">🎉 SELAMAT! ANDA LULUS 🎉</div>`;
+          hasil.innerHTML = `
+            <p>Nama: <strong>${siswa.nama}</strong></p>
+            <p>Tempat, Tanggal Lahir: ${siswa.tempat}, ${siswa.tanggal}</p>
+            <p class="lulus">🎉 SELAMAT! ANDA DINYATAKAN LULUS 🎉</p>
+          `;
           showConfetti();
         } else {
-          content += `<div class="tidaklulus">MOHON MAAF, ANDA BELUM LULUS.</div>`;
+          hasil.innerHTML = `
+            <p>Nama: <strong>${siswa.nama}</strong></p>
+            <p>Tempat, Tanggal Lahir: ${siswa.tempat}, ${siswa.tanggal}</p>
+            <p class="tidaklulus">Mohon Maaf, Anda Belum  Lulus.</p>
+          `;
         }
-        hasil.innerHTML = content;
       } else {
         hasil.innerHTML = "NISN tidak ditemukan.";
       }
@@ -209,11 +142,21 @@
     function showConfetti() {
       const duration = 2 * 1000;
       const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
       const interval = setInterval(function() {
         if (Date.now() > animationEnd) return clearInterval(interval);
         confetti({
           particleCount: 50,
-          origin: { x: Math.random(), y: Math.random() - 0.2 }
+          origin: {
+            x: randomInRange(0.1, 0.9),
+            y: Math.random() - 0.2
+          },
+          ...defaults
         });
       }, 250);
     }
