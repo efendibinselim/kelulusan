@@ -5,17 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pengumuman Kelulusan - SMP Negeri 3 Pekanbaru</title>
   <style>
+  /* Reset standar */
+  * {
+    box-sizing: border-box;
+  }
 
-  /* 1. Pastikan HTML dan Body mengambil tinggi penuh layar */
+  /* KUNCI UTAMA: Paksa tinggi layar minimal 100% */
   html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
   }
 
-  /* 2. Set body sebagai kontainer Flex */
+  /* Ganti Flexbox dengan Grid untuk kontrol lebih ketat */
   body {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Header: auto, Konten: sisa layar, Footer: auto */
+    min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
     background: #f0f4f8;
   }
@@ -25,7 +31,6 @@
     color: white;
     padding: 20px;
     text-align: center;
-    flex-shrink: 0; /* Header tidak boleh mengecil */
   }
 
   header img {
@@ -33,12 +38,10 @@
     margin-bottom: 10px;
   }
 
-  /* 3. 'flex: 1' akan memaksa main mengisi ruang kosong yang ada */
-  /* Ini yang mendorong footer ke bawah */
+  /* Main akan dipaksa mengisi ruang tengah */
   main {
     padding: 30px 20px;
     text-align: center;
-    flex: 1 0 auto; 
   }
 
   input[type="text"] {
@@ -76,14 +79,14 @@
     font-weight: bold;
   }
 
-  /* 4. Footer sekarang akan selalu berada di paling bawah */
+  /* Footer akan terkunci di baris paling bawah grid */
   footer {
     background: #e2e8f0;
     text-align: center;
     padding: 15px;
     font-size: 14px;
     color: #444;
-    flex-shrink: 0; /* Footer tidak boleh mengecil */
+    border-top: 1px solid #cbd5e1;
   }
 
   @keyframes blink {
