@@ -6,11 +6,18 @@
   <title>Pengumuman Kelulusan - SMP Negeri 3 Pekanbaru</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f0f4f8;
-      margin: 0;
-      padding: 0;
+          height: 100%; /* Penting agar body tahu tinggi layar penuh */
+          margin: 0;
     }
+        
+        body {
+          display: flex;
+          flex-direction: column; /* Menyusun konten secara vertikal */
+          font-family: 'Segoe UI', sans-serif;
+          background: #f0f4f8;
+        }
+
+
     header {
       background: #1d4ed8;
       color: white;
@@ -21,10 +28,15 @@
       height: 80px;
       margin-bottom: 10px;
     }
+
     main {
       padding: 30px 20px;
       text-align: center;
+      flex: 1; /* Ini adalah 'magic'nya: elemen main akan mengambil semua sisa ruang yang ada */
     }
+
+
+    
     input[type="text"] {
       padding: 10px;
       width: 250px;
