@@ -5,145 +5,146 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pengumuman Kelulusan - SMP Negeri 3 Pekanbaru</title>
   <style>
-  * {
-    box-sizing: border-box;
-  }
+    /* Reset & Struktur Dasar */
+    * { box-sizing: border-box; }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
 
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+    }
 
-  body {
-    display: grid;
-    /* Footer tetap di bawah, main fleksibel */
-    grid-template-rows: auto 1fr auto;
-    min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f4f8;
-    color: #333;
-  }
+    /* Header */
+    header {
+      background: #1d4ed8;
+      color: white;
+      padding: 20px 10px;
+      text-align: center;
+      flex-shrink: 0;
+    }
 
-  header {
-    background: #1d4ed8;
-    color: white;
-    padding: 20px 15px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+    header img {
+      height: 70px;
+      width: auto;
+      margin-bottom: 10px;
+    }
 
-  header img {
-    height: 70px;
-    margin-bottom: 10px;
-  }
+    header h1 { font-size: 1.4rem; margin: 5px 0; }
+    header h2 { font-size: 1rem; font-weight: normal; margin: 0; }
 
-  header h1 { font-size: 1.5rem; margin: 5px 0; }
-  header h2 { font-size: 1.1rem; font-weight: normal; margin: 0; }
+    /* Konten Utama */
+    main {
+      flex: 1 0 auto; /* Mendorong footer ke bawah */
+      display: flex;
+      justify-content: center; /* Tengah horizontal */
+      align-items: flex-start; /* Mulai dari atas */
+      padding: 30px 15px;
+    }
 
-  /* BAGIAN UTAMA YANG DIUBAH */
-  main {
-    padding: 40px 20px;
-    text-align: center;
-    /* Membatasi lebar di komputer agar tidak terlalu plong */
-    max-width: 600px; 
-    margin: 0 auto; /* Tengah secara horizontal */
-    width: 100%;
-  }
+    /* Kotak Putih Tengah */
+    .container {
+      background: white;
+      width: 100%;
+      max-width: 450px; /* Batas lebar di komputer */
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      text-align: center;
+    }
 
-  .search-box {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-  }
+    .container p {
+      margin-bottom: 20px;
+      color: #64748b;
+    }
 
-  input[type="text"] {
-    padding: 12px;
-    width: 100%; /* Full width sesuai container main */
-    max-width: 300px;
-    font-size: 16px;
-    border: 2px solid #cbd5e1;
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.3s;
-  }
+    /* Input & Tombol */
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      text-align: center;
+      outline: none;
+    }
 
-  input[type="text"]:focus {
-    border-color: #2563eb;
-  }
+    input[type="text"]:focus {
+      border-color: #2563eb;
+    }
 
-  button {
-    padding: 12px 30px;
-    font-size: 16px;
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-    max-width: 300px;
-    transition: background 0.3s;
-  }
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
 
-  button:hover {
-    background-color: #1e40af;
-  }
+    button:hover { background-color: #1e40af; }
 
-  .result {
-    margin-top: 30px;
-    padding: 20px;
-    border-radius: 12px;
-    background: white;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-    /* Sembunyikan box jika kosong */
-    display: none; 
-  }
+    /* Hasil */
+    .result {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid #f1f5f9;
+      font-size: 16px;
+      line-height: 1.6;
+    }
 
-  /* Tampilkan box jika ada isi */
-  .result:not(:empty) {
-    display: block;
-  }
+    .lulus {
+      color: #059669;
+      font-weight: bold;
+      font-size: 1.1rem;
+      animation: blink 1s infinite;
+      margin-top: 10px;
+    }
 
-  .lulus {
-    color: #059669;
-    font-weight: 800;
-    font-size: 1.2rem;
-    margin-top: 15px;
-    animation: blink 1s infinite;
-  }
+    .tidaklulus {
+      color: #dc2626;
+      font-weight: bold;
+      margin-top: 10px;
+    }
 
-  .tidaklulus {
-    color: #dc2626;
-    font-weight: bold;
-    margin-top: 15px;
-  }
+    /* Footer */
+    footer {
+      background: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 12px;
+      color: #94a3b8;
+      border-top: 1px solid #e2e8f0;
+      flex-shrink: 0;
+    }
 
-  footer {
-    background: #ffffff;
-    text-align: center;
-    padding: 20px;
-    font-size: 13px;
-    color: #64748b;
-    border-top: 1px solid #e2e8f0;
-  }
+    @keyframes blink {
+      0%, 100% { opacity: 1 }
+      50% { opacity: 0.5 }
+    }
 
-  /* Responsif untuk layar kecil (HP) */
-  @media (max-width: 480px) {
-    header h1 { font-size: 1.2rem; }
-    header h2 { font-size: 0.9rem; }
-    main { padding: 20px 15px; }
-    header img { height: 60px; }
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1 }
-    50% { opacity: 0.6 }
-  }
-</style>
+    /* Penyesuaian HP */
+    @media (max-width: 480px) {
+      header h1 { font-size: 1.1rem; }
+      header h2 { font-size: 0.9rem; }
+      .container { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
+
   <header>
     <img src="https://raw.githubusercontent.com/efendibinselim/PENGUMUMAN-KELULUSAN/refs/heads/main/logosmpn3pku%20png.png" alt="Logo Sekolah">
     <h1>Pengumuman Kelulusan</h1>
@@ -151,19 +152,20 @@
   </header>
 
   <main>
-    <p>Masukkan NISN untuk melihat hasil kelulusan:</p>
-    <input type="text" id="nisnInput" placeholder="Masukkan NISN">
-    <button onclick="cekKelulusan()">Cek</button>
-    <div class="result" id="hasil"></div>
+    <div class="container">
+      <p>Masukkan NISN untuk melihat hasil:</p>
+      <input type="text" id="nisnInput" placeholder="Contoh: 0098765432">
+      <button onclick="cekKelulusan()">Cek Kelulusan</button>
+      <div class="result" id="hasil"></div>
+    </div>
   </main>
 
   <footer>
-    &copy; 2026 SMP Negeri 3 Pekanbaru - Jl. Dahlia No. 102
+    &copy; 2026 SMP Negeri 3 Pekanbaru<br>Jl. Dahlia No. 102
   </footer>
 
   <script>
     const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlOAf-YkKZAjTd7dpK49JinaQyppe3GWonVcKqewsJxboPYAOkqT2QG9-HOgx8hDs0DItwRHCA6w24/pub?output=csv";
-
     let dataSiswa = [];
 
     fetch(sheetURL)
@@ -185,29 +187,20 @@
     function cekKelulusan() {
       const input = document.getElementById("nisnInput").value.trim();
       const hasil = document.getElementById("hasil");
-
       if (input === "") {
         hasil.innerHTML = "Silakan masukkan NISN.";
         return;
       }
-
       const siswa = dataSiswa.find(d => d.nisn === input);
-
       if (siswa) {
+        let content = `<p>Nama: <strong>${siswa.nama}</strong><br>TTL: ${siswa.tempat}, ${siswa.tanggal}</p>`;
         if (siswa.status.toUpperCase() === "LULUS") {
-          hasil.innerHTML = `
-            <p>Nama: <strong>${siswa.nama}</strong></p>
-            <p>Tempat, Tanggal Lahir: ${siswa.tempat}, ${siswa.tanggal}</p>
-            <p class="lulus">🎉 SELAMAT! ANDA DINYATAKAN LULUS 🎉</p>
-          `;
+          content += `<div class="lulus">🎉 SELAMAT! ANDA LULUS 🎉</div>`;
           showConfetti();
         } else {
-          hasil.innerHTML = `
-            <p>Nama: <strong>${siswa.nama}</strong></p>
-            <p>Tempat, Tanggal Lahir: ${siswa.tempat}, ${siswa.tanggal}</p>
-            <p class="tidaklulus">Mohon Maaf, Anda Belum  Lulus.</p>
-          `;
+          content += `<div class="tidaklulus">MOHON MAAF, ANDA BELUM LULUS.</div>`;
         }
+        hasil.innerHTML = content;
       } else {
         hasil.innerHTML = "NISN tidak ditemukan.";
       }
@@ -216,21 +209,11 @@
     function showConfetti() {
       const duration = 2 * 1000;
       const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
-
-      function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-      }
-
       const interval = setInterval(function() {
         if (Date.now() > animationEnd) return clearInterval(interval);
         confetti({
           particleCount: 50,
-          origin: {
-            x: randomInRange(0.1, 0.9),
-            y: Math.random() - 0.2
-          },
-          ...defaults
+          origin: { x: Math.random(), y: Math.random() - 0.2 }
         });
       }, 250);
     }
