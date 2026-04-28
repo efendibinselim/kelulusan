@@ -119,28 +119,37 @@
         });
       });
 
-    function cekKelulusan() {
-      const inputVal = document.getElementById("nisnInput").value.trim();
-      const display = document.getElementById("hasil");
-      
-      if (!inputVal) {
-        display.innerHTML = "Isi NISN dulu ya.";
-        return;
-      }
-
-      const mhs = listSiswa.find(s => s.nisn === inputVal);
-
-      if (mhs) {
-        if (mhs.status.toUpperCase() === "LULUS") {
-          display.innerHTML = `<h3>${mhs.nama}</h3><p class="lulus">SELAMAT! ANDA LULUS</p>`;
-          confetti(); // Efek cepat
-        } else {
-          display.innerHTML = `<h3>${mhs.nama}</h3><p class="tidaklulus">MAAF, BELUM LULUS</p>`;
+      function cekKelulusan() {
+        const inputVal = document.getElementById("nisnInput").value.trim();
+        const display = document.getElementById("hasil");
+        
+        if (!inputVal) {
+          display.innerHTML = "Silakan masukkan NISN.";
+          return;
         }
-      } else {
-        display.innerHTML = "Data tidak ditemukan. Cek lagi NISN Anda.";
+      
+        const mhs = listSiswa.find(s => s.nisn === inputVal);
+      
+        if (mhs) {
+          if (mhs.status.toUpperCase() === "LULUS") {
+            display.innerHTML = `
+              <p>Nama: <strong>${mhs.nama}</strong></p>
+              <p>Tempat, Tanggal Lahir: ${mhs.tempat}, ${mhs.tanggal}</p>
+              <p class="lulus">🎉 SELAMAT! ANDA DINYATAKAN LULUS 🎉</p>
+            `;
+            // Memanggil fungsi konfeti yang durasinya lebih lama
+            showConfetti(); 
+          } else {
+            display.innerHTML = `
+              <p>Nama: <strong>${mhs.nama}</strong></p>
+              <p>Tempat, Tanggal Lahir: ${mhs.tempat}, ${mhs.tanggal}</p>
+              <p class="tidaklulus">Mohon Maaf, Anda Belum Lulus.</p>
+            `;
+          }
+        } else {
+          display.innerHTML = "NISN tidak ditemukan. Pastikan nomor yang dimasukkan benar.";
+        }
       }
-    }
   </script>
 </body>
 </html>
