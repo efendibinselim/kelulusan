@@ -55,6 +55,32 @@
       color: red;
       font-weight: bold;
     }
+
+    /* Style Timer */
+    #timer-container {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      display: inline-block;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .timer-unit {
+      display: inline-block;
+      margin: 0 10px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .timer-label {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #666;
+    }
+    .hidden {
+      display: none !important;
+    }
+
     footer {
       background: #e2e8f0;
       text-align: center;
@@ -77,9 +103,22 @@
   </header>
 
   <main>
-    <p>Masukkan NISN untuk melihat hasil kelulusan:</p>
-    <input type="text" id="nisnInput" placeholder="Masukkan NISN">
-    <button onclick="cekKelulusan()">Cek</button>
+    <div id="timer-container">
+      <p>Pengumuman akan dibuka dalam:</p>
+      <div id="countdown">
+        <div class="timer-unit"><span id="days">00</span><span class="timer-label">Hari</span></div>
+        <div class="timer-unit"><span id="hours">00</span><span class="timer-label">Jam</span></div>
+        <div class="timer-unit"><span id="minutes">00</span><span class="timer-label">Menit</span></div>
+        <div class="timer-unit"><span id="seconds">00</span><span class="timer-label">Detik</span></div>
+      </div>
+    </div>
+
+    <div id="form-kelulusan" class="hidden">
+      <p>Masukkan NISN untuk melihat hasil kelulusan:</p>
+      <input type="text" id="nisnInput" placeholder="Masukkan NISN">
+      <button onclick="cekKelulusan()">Cek</button>
+    </div>
+    
     <div class="result" id="hasil"></div>
   </main>
 
@@ -88,8 +127,33 @@
   </footer>
 
   <script>
-    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlOAf-YkKZAjTd7dpK49JinaQyppe3GWonVcKqewsJxboPYAOkqT2QG9-HOgx8hDs0DItwRHCA6w24/pub?output=csv";
+    // 1. PENGATURAN WAKTU (GMT+7)
+    // Format: YYYY-MM-DDTHH:mm:ss+07:00
+    const targetDate = new Date("2026-06-10T10:00:00+07:00").getTime();
 
+    const countdownTimer = setInterval(function() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = days.toString().padStart(2, '0');
+      document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+      document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+      document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+
+      if (distance < 0) {
+        clearInterval(countdownTimer);
+        document.getElementById("timer-container").classList.add("hidden");
+        document.getElementById("form-kelulusan").classList.remove("hidden");
+      }
+    }, 1000);
+
+    // 2. DATA DARI GOOGLE SHEETS
+    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlOAf-YkKZAjTd7dpK49JinaQyppe3GWonVcKqewsJxboPYAOkqT2QG9-HOgx8hDs0DItwRHCA6w24/pub?output=csv";
     let dataSiswa = [];
 
     fetch(sheetURL)
@@ -108,7 +172,16 @@
         });
       });
 
+    // 3. FUNGSI CEK KELULUSAN
     function cekKelulusan() {
+      const now = new Date().getTime();
+      
+      // Keamanan tambahan agar tidak bisa ditembus lewat console sebelum waktunya
+      if (now < targetDate) {
+        alert("Sabar ya, pengumuman belum dibuka!");
+        return;
+      }
+
       const input = document.getElementById("nisnInput").value.trim();
       const hasil = document.getElementById("hasil");
 
@@ -131,7 +204,7 @@
           hasil.innerHTML = `
             <p>Nama: <strong>${siswa.nama}</strong></p>
             <p>Tempat, Tanggal Lahir: ${siswa.tempat}, ${siswa.tanggal}</p>
-            <p class="tidaklulus">Mohon Maaf, Anda Belum  Lulus.</p>
+            <p class="tidaklulus">Mohon Maaf, Anda Belum Lulus.</p>
           `;
         }
       } else {
@@ -139,6 +212,7 @@
       }
     }
 
+    // 4. EFEK KONFETI
     function showConfetti() {
       const duration = 2 * 1000;
       const animationEnd = Date.now() + duration;
